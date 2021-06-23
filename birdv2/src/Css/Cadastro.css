@@ -1,0 +1,23 @@
+.CorCadastro{
+    background-color: #7DD2D2;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Quadrado{
+    background-color:#ffffff;
+    position: relative;
+    width: 20rem;
+    min-height: auto;
+    min-width: auto;
+    height: 32rem;
+    border-radius: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*overflow-y: auto;*/   
+    
+}
+
+

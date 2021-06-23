@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+
+
+.nav-bar{
+  background-color: #000;
+  height: 8vh;
+  position: fixed;
+  width: 100vw;
+
+}
+
+.Fontes{
+  font-family: 'Nunito', sans-serif;
+  min-height:50%;
+  min-width:50%;
+}

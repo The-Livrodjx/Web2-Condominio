@@ -1,0 +1,7 @@
+{
+    "watch":["src"],
+    "ext": "ts,js,sql",
+    "execMap": {
+        "ts": "ts-node src/index.ts"
+    }
+}
