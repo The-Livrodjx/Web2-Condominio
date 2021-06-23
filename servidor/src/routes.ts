@@ -11,7 +11,7 @@ routes.get('/',(request: Request, response: Response) =>{
 routes.get('/retornarDados', getCondominio)
 
 routes.post('/Cadastro', saveCondominio)
-routes.get('/Procurar/:cnpj', getCon)
+routes.get('/Procurar/:cnpj/:Senha', getCon)
 routes.put('/condominio/:idcondominio', alterCon)
 routes.delete('/condominio/:idcondominio', delCon)
 

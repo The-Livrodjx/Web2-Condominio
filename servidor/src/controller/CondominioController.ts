@@ -15,8 +15,11 @@ export const saveCondominio = async (request: Request, response: Response) =>{
 }
 export const getCon = async (request: Request, response: Response) => {
     console.log("Pesquisando...")
-    const { cnpj } = request.params
-    const con = await getRepository(condominio).findOne({cnpj: cnpj})
+    const { cnpj, Senha } = request.params
+    const con = await getRepository(condominio).findOne({
+        cnpj: cnpj,
+        Senha: Senha,
+    })
     return response.json(con)
 }
 export const alterCon = async (request: Request, response: Response) => {

@@ -8,6 +8,7 @@ import Cadastro from './pages/Cadastro'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import DepoisLogin from './pages/DepoisLogin';
+import CadMorador from './pages/CadMorador';
 
 function App(props) {
   const menu = (
@@ -40,6 +41,7 @@ function App(props) {
         <Route path="/Cadastro" component={Cadastro}></Route>
         <Route path="/Login" component={Login}></Route>
         <Route path="/Logado" component={DepoisLogin}></Route>
+        <Route path="/CadastroMorador" component={CadMorador}/>
         </Switch>
     </div> 
   );

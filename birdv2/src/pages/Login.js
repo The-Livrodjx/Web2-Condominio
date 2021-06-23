@@ -15,7 +15,7 @@ function AntesDoLogin(props){
       setSenha(document.getElementById("Senha").value) 
       console.log(login);
       if((login !== "") && (senha !== "")){
-        const resultado = await api.get(`/Procurar/${login}`).then((response) => {
+        const resultado = await api.get(`/Procurar/${login}/${senha}`).then((response) => {
           setResultado(response.data)
         });
       }

@@ -1,18 +1,27 @@
 .FundoDPL{
     background-color: #7DD2D2;
     height: 100vh;
+    color: #fff;
+}
+
+.BarraMenu{
+    background-color:#000;
+    position:static;
+    width: 20vw;
+    height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.Fundo{
-    background-color:#ffffff;
-    position: relative;
-    width: 20rem;
-    height: 25rem;
-    border-radius: 5%;
+p:hover{
+    color:lightseagreen;
+    transition: 1.2s;
+    cursor:pointer;
+}
+.Mostrar{
+    background-color: #fff;
+    position: static;
+    height: 100hv;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
 }
