@@ -2,17 +2,17 @@
     background-color: #7DD2D2;
     height: 100vh;
     color: #fff;
+    display: flex;
 }
-
-.BarraMenu{
+.BarraMenu{ 
     background-color:#000;
     position:static;
-    width: 20vw;
+    width: 25vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-content: center;
 }
 p:hover{
     color:lightseagreen;
@@ -20,8 +20,10 @@ p:hover{
     cursor:pointer;
 }
 .Mostrar{
-    background-color: #fff;
-    position: static;
+    background-color:#fff;
     height: 100hv;
+    width: 100vw;
     display: flex;
+    
+    
 }
