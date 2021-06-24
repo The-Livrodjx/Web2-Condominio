@@ -112,6 +112,21 @@ const RegistrationForm = () => {
       scrollToFirstError
     >
       <Form.Item
+        name="cnpj"
+        label="cnpj"
+        rules={[
+          {
+            required: true,
+            message: 'Por favor, insira um CNPJ',
+          },
+        ]}
+      >
+        <Input/>
+        
+      </Form.Item>
+
+
+      <Form.Item
         name="email"
         label="E-mail"
         rules={[
@@ -185,60 +200,6 @@ const RegistrationForm = () => {
       </Form.Item>
 
       <Form.Item
-        name="website"
-        label="Website"
-        rules={[
-          {
-            required: true,
-            message: 'Please input website!',
-          },
-        ]}
-      >
-        <AutoComplete options={websiteOptions} onChange={onWebsiteChange} placeholder="website">
-          <Input />
-        </AutoComplete>
-      </Form.Item>
-
-      <Form.Item
-        name="gender"
-        label="Gender"
-        rules={[
-          {
-            required: true,
-            message: 'Please select gender!',
-          },
-        ]}
-      >
-        <Select placeholder="select your gender">
-          <Option value="male">Male</Option>
-          <Option value="female">Female</Option>
-          <Option value="other">Other</Option>
-        </Select>
-      </Form.Item>
-
-      <Form.Item label="Captcha" extra="We must make sure that your are a human.">
-        <Row gutter={8}>
-          <Col span={12}>
-            <Form.Item
-              name="captcha"
-              noStyle
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input the captcha you got!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Button>Get captcha</Button>
-          </Col>
-        </Row>
-      </Form.Item>
-
-      <Form.Item
         name="agreement"
         valuePropName="checked"
         rules={[
@@ -261,5 +222,4 @@ const RegistrationForm = () => {
     </Form>
   );
 };
-
-export default RegistrationForm;
+export default RegistrationForm ;

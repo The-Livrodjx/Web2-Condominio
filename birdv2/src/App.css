@@ -1,1 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+
+.logo {
+    float: left;
+    width: 120px;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  .site-layout .site-layout-background {
+    background: #fff;
+  }
+  [data-theme="dark"] .site-layout .site-layout-background {
+    background: #141414;
+  }
