@@ -1,14 +1,47 @@
 import React, { useState } from 'react'
+import RegistrationForm from './CadastrarMorador'
 import { Layout, Menu, Calendar, Space, Tag } from 'antd';
-import { ExclamationCircleOutlined, UserOutlined, VideoCameraOutlined, CalendarOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, UserOutlined, MenuOutlined, CalendarOutlined } from '@ant-design/icons';
 import './../Css/Logado.css'
 import { Table } from 'antd';
+import {dateCellRender,monthCellRender} from './Calendario'
 const { Header, Content, Footer, Sider } = Layout;
+
 
 function Logado (props){
     const [Estado,setEstado] = useState("")
     function Calendario(props){
-        setEstado(<Calendar/>)
+        setEstado(<Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender}/>)
+    }
+    function Registrar(){
+        setEstado(<RegistrationForm/>)
+    }
+    function Avisos(props){
+        const columns = [
+            {
+              title: 'Assunto',
+              dataIndex: 'assunto',
+              key: 'assunto',
+            },
+            {
+              title: 'Arquivo',
+              dataIndex: 'arquvo',
+              key: 'arquivo',
+              render: (text) => (
+                <Space size="middle">
+                  <a>Baixar</a>
+                </Space>
+              ),
+            },
+        ];
+        const data = [
+            {
+              key: '1',
+              assunto: "Teste"
+            }
+        ];
+
+        setEstado(<Table columns={columns} dataSource={data}/>)
     }
     function CadastrarM(props){
         const columns = [
@@ -95,42 +128,42 @@ function Logado (props){
     }
     return(
         <>
-            <Layout>
-    <Sider
-      breakpoint="lg"
-      collapsedWidth="0"
-      onBreakpoint={broken => {
-        console.log(broken);
-      }}
-      onCollapse={(collapsed, type) => {
-        console.log(collapsed, type);
-      }}
-    >
-      <div className="logo" />
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-        <Menu.Item key="1" icon={<UserOutlined />}>
-          nav 1
-        </Menu.Item>
-        <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-          nav 2
-        </Menu.Item>
-        <Menu.Item key="3" icon={<ExclamationCircleOutlined /> } onClick ={CadastrarM}>
-          nav 3
-        </Menu.Item>
-        <Menu.Item key="4" icon={<CalendarOutlined />} onClick = {Calendario}>
-          nav 4
-        </Menu.Item>
-      </Menu>
-    </Sider>
     <Layout>
-      <Header className="site-layout-sub-header-background" style={{ padding: 0, backgroundColor:"#001529"}} />
-      <Content style={{ margin: '24px 16px 0' }}>
-        <div className="site-layout-background" style={{ padding: 24, minHeight: 520}}>
-            {Estado}
-        </div>
-      </Content>
-      <Footer style={{ textAlign: 'center' }}>©2021 Created by Nathan Silva</Footer>
-    </Layout>
+        <Sider
+        breakpoint="lg"
+        collapsedWidth="0"
+        onBreakpoint={broken => {
+            console.log(broken);
+        }}
+        onCollapse={(collapsed, type) => {
+            console.log(collapsed, type);
+        }}
+        >
+        <div className="logo" />
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+            <Menu.Item key="1" icon={<UserOutlined />} onClick={Registrar}>
+                Cadastrar
+            </Menu.Item>
+            <Menu.Item key="2" icon={<ExclamationCircleOutlined />} onClick={Avisos}>
+                Avisos
+            </Menu.Item>
+            <Menu.Item key="3" icon={<MenuOutlined /> } onClick ={CadastrarM}>
+                Funcionarios/Morador
+            </Menu.Item>
+            <Menu.Item key="4" icon={<CalendarOutlined />} onClick = {Calendario}>
+                Eventos
+            </Menu.Item>
+        </Menu>
+        </Sider>
+        <Layout>
+        <Header className="site-layout-sub-header-background" style={{ padding: 0, backgroundColor:"#001529"}} />
+        <Content style={{ margin: '24px 16px 0' }}>
+            <div className="site-layout-background" style={{ padding: 24, minHeight: 520}}>
+                {Estado}
+            </div>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>©2021 Created by Nathan Silva</Footer>
+        </Layout>
   </Layout>,
         </>
     );
