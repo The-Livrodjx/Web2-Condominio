@@ -3,27 +3,30 @@ import './App.css';
 import {Layout, Menu, Breadcrumb} from 'antd'
 import {} from '@ant-design/icons';
 import 'antd/dist/antd.css';
-import {Link, Route, Switch} from 'react-router-dom'
+import {Route, Switch, browserHistory} from 'react-router-dom'
+import PageLogin from './pagesHome/Login'
+import RegistrationForm from './pagesHome/CadastrarCondo'
 import Logado from './pages/Logado'
 
 const { Header, Content, Footer } = Layout;
 
 function App(props) {
-  const [Estado,setEstado] = useState("")
   function Home(){
     setEstado("Home")
   }
   function Cadastro(){
-    setEstado("Cadastro")
-  }
+    setEstado(<RegistrationForm Loger={Login}/>)
+  } 
   function Login(){
-    setEstado("Login")
+    
+    setEstado(<PageLogin/>)
   }
   function Sobre(){
     setEstado("Sobre")
   }
+  const [Estado,setEstado] = useState("")
   return (
-    <>
+    <div>
   <Layout>
     <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
       <div className="logo" />
@@ -34,14 +37,17 @@ function App(props) {
         <Menu.Item key="4" onClick={Sobre}>Sobre</Menu.Item>
       </Menu>
     </Header>
-    <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
-      <div className="site-layout-background" style={{ padding: 24, minHeight: 450 , marginTop: 20}}>
+    <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64}}>
+      <div className="site-layout-background" style={{ padding: 24, minHeight: 450 , marginTop: 50}}>
         {Estado}
       </div>
     </Content>
     <Footer style={{ textAlign: 'center' }}>©2021 Created by Nathan Silva</Footer>
   </Layout>,
-    </> 
+    <Switch>
+      <Route path="/Login" component={Logado}/>
+    </Switch>
+    </div> 
   );
 }
 

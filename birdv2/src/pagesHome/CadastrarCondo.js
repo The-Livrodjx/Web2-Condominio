@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import api from './../servidor/Server'
+
 const { Option } = Select;
 const residences = [
   {
@@ -66,25 +68,12 @@ const tailFormItemLayout = {
   },
 };
 
-const RegistrationForm = () => {
+const RegistrationForm = (props) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
   const onWebsiteChange = (value) => {
@@ -95,6 +84,33 @@ const RegistrationForm = () => {
     }
   };
 
+  const registerForm = document.forms.register
+
+// registerForm.<nome do input>.value retorna o valor do input de acordo com o atributo name=""
+
+const [Senha, setSenha] = useState("")
+const [Email, setEmail] = useState("")
+const [CNPJ, setCNPJ] = useState("")
+const [Nome, setNome] = useState("")
+const [Cidade, setCidade] = useState("")
+const [Estado, setEstado] = useState("")
+const [Endereco, setEndereco] = useState("")
+
+const register = () => {
+ if((Senha != "") && (Email != "") && (Cidade != "") && (Estado != "") && (Nome != "") && (CNPJ != "") && (Endereco != "")){
+      api.post("/Cadastro", {
+        nomeCondominio: Nome,
+        cnpj: CNPJ,
+        endereco: Endereco,
+        Cidade: Cidade,
+        Email: Email,
+        Estado: Estado,
+        Senha: Senha  
+        })
+
+        props.Loger()
+  }
+}
   const websiteOptions = autoCompleteResult.map((website) => ({
     label: website,
     value: website,
@@ -121,10 +137,23 @@ const RegistrationForm = () => {
           },
         ]}
       >
-        <Input/>
+        <Input value={CNPJ} onChange={ e => setCNPJ(e.target.value)}/>
         
       </Form.Item>
 
+      <Form.Item
+        name="Nome"
+        label="Nome: "
+        rules={[
+          {
+            required: true,
+            message: 'Por favor, insira um Nome',
+          },
+        ]}
+      >
+        <Input value={Nome} onChange={ e => setNome(e.target.value)}/>
+        
+      </Form.Item>
 
       <Form.Item
         name="email"
@@ -132,71 +161,97 @@ const RegistrationForm = () => {
         rules={[
           {
             type: 'email',
-            message: 'The input is not valid E-mail!',
+            message: 'Insira um e-mail valido!',
           },
           {
             required: true,
-            message: 'Please input your E-mail!',
+            message: 'Por favor, insira seu e-mail',
           },
         ]}
       >
-        <Input />
+        <Input value={Email} onChange={ e => setEmail(e.target.value)}/>
       </Form.Item>
 
       <Form.Item
-        name="password"
+        name="Senha"
         label="Senha"
         rules={[
           {
             required: true,
-            message: 'Please input your password!',
+            message: 'Por favor, insira sua senha!',
           },
+          
         ]}
         hasFeedback
       >
-        <Input.Password />
+        <Input.Password/>
       </Form.Item>
 
       <Form.Item
-        name="confirm"
-        label="Repita a senha:"
-        dependencies={['password']}
+        name="Confirmar"
+        label="Repita a senha: "
+        dependencies={['Senha']}
         hasFeedback
         rules={[
           {
             required: true,
-            message: 'Please confirm your password!',
+            message: 'Porfavor, confirme sua senha!',
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
+              if (!value || getFieldValue('Senha') === value) {
+                  
                 return Promise.resolve();
               }
 
-              return Promise.reject(new Error('The two passwords that you entered do not match!'));
+              return Promise.reject(new Error('As duas senha nao batem'));
             },
           }),
         ]}
       >
-        <Input.Password />
+        <Input.Password value={Senha} onChange={ e => setSenha(e.target.value)}/>
       </Form.Item>
 
       <Form.Item
-        name="phone"
-        label="Número"
+        name="Endereco"
+        label="Endereço: "
         rules={[
           {
             required: true,
-            message: 'Please input your phone number!',
+            message: 'Por favor, insira um endereço'
           },
         ]}
       >
-        <Input
-          addonBefore={prefixSelector}
-          style={{
-            width: '100%',
-          }}
-        />
+        <Input value={Endereco} onChange={ e => setEndereco(e.target.value)}/>
+        
+      </Form.Item>
+
+      <Form.Item
+        name="Cidade"
+        label="Cidade: "
+        rules={[
+          {
+            required: true,
+            message: 'Por favor, insira uma Cidade',
+          },
+        ]}
+      >
+        <Input value={Cidade} onChange={ e => setCidade(e.target.value)}/>
+        
+      </Form.Item>
+
+      <Form.Item
+        name="Estado"
+        label="Estado: "
+        rules={[
+          {
+            required: true,
+            message: 'Por favor, insira um Estado',
+          },
+        ]}
+      >
+        <Input value={Estado} onChange={ e => setEstado(e.target.value)}/>
+        
       </Form.Item>
 
       <Form.Item
@@ -205,7 +260,7 @@ const RegistrationForm = () => {
         rules={[
           {
             validator: (_, value) =>
-              value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement')),
+              value ? Promise.resolve() : Promise.reject(new Error('Você precisa aceitar os termos')),
           },
         ]}
         {...tailFormItemLayout}
@@ -215,8 +270,8 @@ const RegistrationForm = () => {
         </Checkbox>
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Register
+        <Button type="primary" htmlType="submit" onClick={register}>
+          Registrar
         </Button>
       </Form.Item>
     </Form>
