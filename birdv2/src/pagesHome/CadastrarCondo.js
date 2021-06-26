@@ -107,8 +107,6 @@ const register = () => {
         Estado: Estado,
         Senha: Senha  
         })
-
-        props.Loger()
   }
 }
   const websiteOptions = autoCompleteResult.map((website) => ({

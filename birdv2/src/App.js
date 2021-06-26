@@ -6,7 +6,6 @@ import 'antd/dist/antd.css';
 import {Route, Switch,NavLink, Link} from 'react-router-dom'
 import Login from './pagesHome/Login'
 import Cadastro from './pagesHome/CadastrarCondo'
-import Logado from './pages/Logado'
 import Home from './pagesHome/Home'
 
 const { Header, Content, Footer } = Layout;
@@ -19,20 +18,20 @@ function App(props) {
       <div className="logo" />
       <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
         
-          <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
-         <Menu.Item key="2"><Link to="/Cadastro">Cadastro</Link></Menu.Item>
-          <Menu.Item key="3"><Link to="/Login">Login</Link></Menu.Item>
+          <Menu.Item key="1"><NavLink to="/">Home</NavLink></Menu.Item>
+         <Menu.Item key="2"><NavLink to="/Cadastro">Cadastro</NavLink></Menu.Item>
+          <Menu.Item key="3"><NavLink to="/Login">Login</NavLink></Menu.Item>
           <Menu.Item key="4">Sobre</Menu.Item>
         
       </Menu>
     </Header>
     <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64}}>
       <div className="site-layout-background" style={{ padding: 24, minHeight: 450 , marginTop: 50}}> 
-        <Switch>
-          <Route path="/" exact component={Home}/>
-          <Route path="/Login" component={Login} />
-          <Route parth="/Cadastro" component={Cadastro}/>
-        </Switch>
+      <Switch>
+          <Route exact path="/" component={Home}/>
+          <Route exact path="/Login" component={Login} />
+          <Route exact path="/Cadastro" component={Cadastro}/>
+      </Switch>
       </div>
     </Content>
     <Footer style={{ textAlign: 'center' }}>©2021 Created by Nathan Silva</Footer>

@@ -17,9 +17,9 @@ const Login= (props) => {
       })
       if(Resultado){
         console.log("Achei")
-        return (<Redirect to="/Login"/>)
+        props.history.push("/Logado")
       }else{
-        console.login("Não achei")
+        console.log("Não achei")
         return ;
       }
     }
