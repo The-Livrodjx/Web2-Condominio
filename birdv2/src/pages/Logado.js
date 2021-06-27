@@ -5,13 +5,14 @@ import { ExclamationCircleOutlined, UserOutlined, MenuOutlined, CalendarOutlined
 import './../Css/Logado.css'
 import { Table } from 'antd';
 import {dateCellRender,monthCellRender} from './Calendario'
+import { NavLink, Switch, Route} from 'react-router-dom';
 const { Header, Content, Footer, Sider } = Layout;
 
 
 function Logado (props){
     const [Estado,setEstado] = useState("")
     function Calendario(props){
-        setEstado(<Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender}/>)
+        return <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender}/>
     }
     function Registrar(){
         setEstado(<RegistrationForm/>)
@@ -150,16 +151,19 @@ function Logado (props){
             <Menu.Item key="3" icon={<MenuOutlined /> } onClick ={CadastrarM}>
                 Funcionarios/Morador
             </Menu.Item>
-            <Menu.Item key="4" icon={<CalendarOutlined />} onClick = {Calendario}>
+            <Menu.Item key="4" icon={<CalendarOutlined />} onClick = {Calendario}><NavLink to="/Calendario">
                 Eventos
-            </Menu.Item>
+            </NavLink></Menu.Item>
         </Menu>
         </Sider>
         <Layout>
         <Header className="site-layout-sub-header-background" style={{ padding: 0, backgroundColor:"#001529"}} />
         <Content style={{ margin: '24px 16px 0' }}>
             <div className="site-layout-background" style={{ padding: 24, minHeight: 520}}>
-                {Estado}
+                <Switch>
+                  <Route path="/Calendario" component={Calendario}>
+                  </Route>
+                </Switch>
             </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>©2021 Created by Nathan Silva</Footer>

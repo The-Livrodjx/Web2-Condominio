@@ -107,6 +107,7 @@ const register = () => {
         Estado: Estado,
         Senha: Senha  
         })
+        props.history.push("/Login")
   }
 }
   const websiteOptions = autoCompleteResult.map((website) => ({

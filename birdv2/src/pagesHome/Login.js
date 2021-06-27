@@ -1,6 +1,6 @@
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import api from '../servidor/Server';
 import { Redirect } from 'react-router-dom';
 const Login= (props) => {
@@ -10,18 +10,22 @@ const Login= (props) => {
   const [User, setUser] = useState("")
   const [Senha, setsenha] = useState("")
   const [Resultado, setResultado] = useState("")
-  const  Verificar = () => {
+  useEffect(() =>{
+    console.log(Resultado)
+    if(Resultado){
+      console.log("Achei")
+      props.history.push("/Logado")
+    }else{
+      console.log("Nao achei")
+      return ;
+    }
+  }, [Resultado])
+  async function Verificar () {
     if((User !== "") && (Senha !== "")){
-      api.get(`/Procurar/${User}/${Senha}`).then((response) =>{
-        setResultado(response.data)
+      await api.get(`/Procurar/${User}/${Senha}`).then((response) =>{
+        const r = response.data
+        setResultado(r)
       })
-      if(Resultado){
-        console.log("Achei")
-        props.history.push("/Logado")
-      }else{
-        console.log("Não achei")
-        return ;
-      }
     }
   }
   return (
