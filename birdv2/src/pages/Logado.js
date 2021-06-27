@@ -14,9 +14,6 @@ function Logado (props){
     function Calendario(props){
         return <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender}/>
     }
-    function Registrar(){
-        setEstado(<RegistrationForm/>)
-    }
     function Avisos(props){
         const columns = [
             {
@@ -42,9 +39,9 @@ function Logado (props){
             }
         ];
 
-        setEstado(<Table columns={columns} dataSource={data}/>)
+        return <Table columns={columns} dataSource={data}/>
     }
-    function CadastrarM(props){
+    function CadastrarM(){
         const columns = [
             {
               title: 'Name',
@@ -125,7 +122,7 @@ function Logado (props){
               tags: ['Funcionario', 'Sub-Sindico', 'Morador'],
             },
           ];
-        setEstado(<Table columns={columns} dataSource={data} />)
+        return <Table columns={columns} dataSource={data} />
     }
     return(
         <>
@@ -142,16 +139,16 @@ function Logado (props){
         >
         <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-            <Menu.Item key="1" icon={<UserOutlined />} onClick={Registrar}>
+            <Menu.Item key="1" icon={<UserOutlined />}><NavLink to="/Cadastrar">
                 Cadastrar
-            </Menu.Item>
-            <Menu.Item key="2" icon={<ExclamationCircleOutlined />} onClick={Avisos}>
+            </NavLink></Menu.Item>
+            <Menu.Item key="2" icon={<ExclamationCircleOutlined />}><NavLink to="/Aviso">
                 Avisos
-            </Menu.Item>
-            <Menu.Item key="3" icon={<MenuOutlined /> } onClick ={CadastrarM}>
+            </NavLink></Menu.Item>
+            <Menu.Item key="3" icon={<MenuOutlined /> }><NavLink to="/CadastrarMorador">
                 Funcionarios/Morador
-            </Menu.Item>
-            <Menu.Item key="4" icon={<CalendarOutlined />} onClick = {Calendario}><NavLink to="/Calendario">
+            </NavLink></Menu.Item>
+            <Menu.Item key="4" icon={<CalendarOutlined />}><NavLink to="/Calendario">
                 Eventos
             </NavLink></Menu.Item>
         </Menu>
@@ -161,8 +158,10 @@ function Logado (props){
         <Content style={{ margin: '24px 16px 0' }}>
             <div className="site-layout-background" style={{ padding: 24, minHeight: 520}}>
                 <Switch>
-                  <Route path="/Calendario" component={Calendario}>
-                  </Route>
+                  <Route path="/Calendario" component={Calendario}/>
+                  <Route path="/Cadastrar" component={RegistrationForm}/>
+                  <Route path="/CadastrarMorador" component={CadastrarM}/>
+                  <Route path="/Aviso" component={Avisos}/>
                 </Switch>
             </div>
         </Content>
