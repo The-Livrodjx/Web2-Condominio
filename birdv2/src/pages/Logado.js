@@ -30,11 +30,14 @@ function Logado (props){
         >
         <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-            <Menu.Item key="1" icon={<UserOutlined />}><NavLink to="/Cadastrar">
-                Cadastrar
-            </NavLink></Menu.Item>
-            <Menu.Item key="2" icon={<ExclamationCircleOutlined />}><NavLink to="/Aviso">
+            <Menu.Item key="1" icon={<ExclamationCircleOutlined />}><NavLink to="/Logado">
                 Avisos
+            </NavLink></Menu.Item>
+            <Menu.Item key="2" icon={<UserOutlined />}><NavLink to={{
+                pathname: "/Cadastrar",
+                state: {detail: true}
+            }}>
+                Cadastrar
             </NavLink></Menu.Item>
             <Menu.Item key="3" icon={<MenuOutlined /> }><NavLink to="/CadastrarMorador">
                 Funcionarios/Morador
@@ -55,7 +58,7 @@ function Logado (props){
                   <Route path="/Calendario" component={Calendario}/>
                   <Route path="/Cadastrar" component={RegistrationForm}/>
                   <Route path="/CadastrarMorador" component={CadastrarTag}/>
-                  <Route path="/Aviso" component={Avisos}/>
+                  <Route path="/Logado" component={Avisos}/>
                   <Route path="/Tags" component={Tags}/>
                 </Switch>
             </div>

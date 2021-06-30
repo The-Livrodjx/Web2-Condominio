@@ -69,7 +69,7 @@ const tailFormItemLayout = {
   },
 };
 const listacom = []
-const RegistrationForm = () => {
+const RegistrationForm = (props) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -101,29 +101,16 @@ if(res.length === 1000){
       setRes(response.data)
     })
 }*/
-const [res,setRes] = useState("")
-const [teste,setTeste] = useState(JSON.parse(Cookies.get("user")))
-useEffect(()=>{
-  if(res){
-    if(listacom.length === 0){
-    res.forEach(element => {
-        console.log(element.Tags)
-        listacom.push(<Option key={element.Tags}>{element.Tags}</Option>)
-    });
-  }
-}
-},[res] )
-useEffect(()=>{
-  api.get(`/GetTags/${teste.idcondominio}`).then((response) =>{
-    setRes(response.data)
-  })
-},[teste] )
-
-
-  /*res.forEach(element => {
-      listacom.push(<Option key={element.Tags}>{element.Tags}</Option>)
-  });*/
-
+const listacom = []
+  const [res,setRes] = useState([])
+  const [teste,setTeste] = useState(JSON.parse(Cookies.get("user")))
+  useEffect(() =>{
+      console.log("Entrei no effect 1")
+      api.get(`/GetTags/${teste.idcondominio}`).then((response) =>{
+        setRes(response.data)
+      })
+  },[])
+  console.log(res)
   return (
     <Form
       {...formItemLayout}
@@ -225,7 +212,9 @@ useEffect(()=>{
         rules={[{ required: true, message: 'Por favor, selecione suas tags', type: 'array' }]}
       >
         <Select mode="multiple" placeholder="Selecione as tags">
-            {listacom}
+        {res.forEach(element => {
+            return(<Option key={element.Tags}>{element.Tags}</Option>)
+        })}
         </Select>
       </Form.Item>
       <Form.Item
