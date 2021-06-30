@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import RegistrationForm from './CadastrarMorador'
 import { Layout, Menu, Calendar } from 'antd';
-import { ExclamationCircleOutlined, UserOutlined, MenuOutlined, CalendarOutlined, BorderlessTableOutlined} from '@ant-design/icons';
+import { LogoutOutlined,ExclamationCircleOutlined, UserOutlined, MenuOutlined, CalendarOutlined, BorderlessTableOutlined} from '@ant-design/icons';
 import './../Css/Logado.css'
 import Avisos from './CadastrarAviso'
 import CadastrarTag from './CadastrarTag';
+import Cookies from 'js-cookie'; 
 import {dateCellRender,monthCellRender} from './Calendario'
 import { NavLink, Switch, Route} from 'react-router-dom';
 import Tags from './FazerTag'
@@ -47,6 +48,9 @@ function Logado (props){
             </NavLink></Menu.Item>
             <Menu.Item key="5" icon={<BorderlessTableOutlined />}><NavLink to="/Tags">
                 Tags
+            </NavLink></Menu.Item>
+            <Menu.Item key="6" icon={<LogoutOutlined />} onClick={() => Cookies.remove("user")}><NavLink to="/">
+                Sair
             </NavLink></Menu.Item>
         </Menu>
         </Sider>

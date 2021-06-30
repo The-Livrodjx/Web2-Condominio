@@ -114,6 +114,11 @@ const listacom = []
   res.forEach(element => {
     listacom.push(<Option key={element.Tags}>{element.Tags}</Option>)
   })
+  const [valor, setValor] = useState("")
+  function Cadastrar(){
+    
+    console.log(valor)
+  }
   return (
     <Form
       {...formItemLayout}
@@ -214,7 +219,7 @@ const listacom = []
         label="Selecione as tags"
         rules={[{ required: true, message: 'Por favor, selecione suas tags', type: 'array' }]}
       >
-        <Select mode="multiple" placeholder="Selecione as tags">
+        <Select mode="multiple" placeholder="Selecione as tags" onChange={e=>setValor(e)}>
         {listacom}
         </Select>
       </Form.Item>
@@ -234,7 +239,7 @@ const listacom = []
         </Checkbox>
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" onClick={Cadastrar}>
           Register
         </Button>
       </Form.Item>
