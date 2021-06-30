@@ -3,18 +3,18 @@ import { condominio } from '../entity/condominio'
 import { Request, Response } from 'express'
 
 export const getCondominio = async (request: Request, response: Response) =>{
-    console.log("Retornando os dados...")
+    console.log("Retornando os dados condominio...")
     const con = await getRepository(condominio).find()
     return response.json(con)
 }
 export const saveCondominio = async (request: Request, response: Response) =>{
-    console.log("Salvando os dados...")
+    console.log("Salvando os dados: condominio...")
     console.log(request.body)
     const con = await getRepository(condominio).save(request.body)
     response.json(con)
 }
 export const getCon = async (request: Request, response: Response) => {
-    console.log("Pesquisando...")
+    console.log("Pesquisando condominio...")
     const { cnpj, Senha } = request.params
     const con = await getRepository(condominio).findOne({
         cnpj: cnpj,

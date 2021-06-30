@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
-import { Form, Input, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import React, { useState, useEffect } from 'react';
+import SelectTags from '../Carregamentos/SelectTags';
+import { Form, Input, Cascader, Row, Col, Checkbox, Button, AutoComplete, Select } from 'antd';
+import Cookies, { getJSON } from 'js-cookie'
+import api from './../servidor/Server'
 const { Option } = Select;
 const residences = [
   {
@@ -65,26 +68,13 @@ const tailFormItemLayout = {
     },
   },
 };
-
+const listacom = []
 const RegistrationForm = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
   const onWebsiteChange = (value) => {
@@ -99,6 +89,41 @@ const RegistrationForm = () => {
     label: website,
     value: website,
   }));
+  //const N = "00:c0:37:c3:75:88:b4:32:98:87:e6:1c:2d:a3:32:4b:1b:a4:b8:1a:63:f9:74:8f:ed:2d:8a:41:0c:2f:c2:1b:12:32:f0:d3:bf:a0:24:27:6c:fd:88:44:81:97:aa:e4:86:a6:3b:fc:a7:b8:bf:77:54:df:b3:27:c7:20:1f:6f:d1:7f:d7:fd:74:15:8b:d3:1c:e7:72:c9:f5:f8:ab:58:45:48:a9:9a:75:9b:5a:2c:05:32:16:2b:7b:62:18:e8:f1:42:bc:e2:c3:0d:77:84:68:9a:48:3e:09:5e:70:16:18:43:79:13:a8:c3:9c:3d:d0:d4:ca:3c:50:0b:88:5f:e3"
+  /*useEffect(() =>{
+    console.log(res)
+    res.forEach(element => {
+      listacom.push(<Option value={element}>{element}</Option>)
+  });
+  }, [res])
+if(res.length === 1000){
+    api.get(`/GetTags/${Cookies.get("user")}`).then((response) =>{
+      setRes(response.data)
+    })
+}*/
+const [res,setRes] = useState("")
+const [teste,setTeste] = useState(JSON.parse(Cookies.get("user")))
+useEffect(()=>{
+  if(res){
+    if(listacom.length === 0){
+    res.forEach(element => {
+        console.log(element.Tags)
+        listacom.push(<Option key={element.Tags}>{element.Tags}</Option>)
+    });
+  }
+}
+},[res] )
+useEffect(()=>{
+  api.get(`/GetTags/${teste.idcondominio}`).then((response) =>{
+    setRes(response.data)
+  })
+},[teste] )
+
+
+  /*res.forEach(element => {
+      listacom.push(<Option key={element.Tags}>{element.Tags}</Option>)
+  });*/
+
   return (
     <Form
       {...formItemLayout}
@@ -112,12 +137,25 @@ const RegistrationForm = () => {
       scrollToFirstError
     >
       <Form.Item
-        name="cnpj"
-        label="cnpj"
+        name="Nome"
+        label="Nome"
         rules={[
           {
             required: true,
-            message: 'Por favor, insira um CNPJ',
+            message: 'Por favor, insira um Nome',
+          },
+        ]}
+      >
+        <Input/>
+        
+      </Form.Item>
+      <Form.Item
+        name="cpf"
+        label="CPF"
+        rules={[
+          {
+            required: true,
+            message: 'Por favor, insira um CPF',
           },
         ]}
       >
@@ -132,11 +170,11 @@ const RegistrationForm = () => {
         rules={[
           {
             type: 'email',
-            message: 'The input is not valid E-mail!',
+            message: 'Esse e-mail não é valido',
           },
           {
             required: true,
-            message: 'Please input your E-mail!',
+            message: 'Por favor, insira seu e-mail',
           },
         ]}
       >
@@ -149,7 +187,7 @@ const RegistrationForm = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your password!',
+            message: 'Por favor, insira sua senha',
           },
         ]}
         hasFeedback
@@ -158,6 +196,7 @@ const RegistrationForm = () => {
       </Form.Item>
 
       <Form.Item
+        style={{display: 'flex', alignItems:"center", justifyContent:"center"}}
         name="confirm"
         label="Repita a senha:"
         dependencies={['password']}
@@ -165,7 +204,7 @@ const RegistrationForm = () => {
         rules={[
           {
             required: true,
-            message: 'Please confirm your password!',
+            message: 'Por favor, Repita sua senha',
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
@@ -173,32 +212,22 @@ const RegistrationForm = () => {
                 return Promise.resolve();
               }
 
-              return Promise.reject(new Error('The two passwords that you entered do not match!'));
+              return Promise.reject(new Error('As senhas não são as mesmas'));
             },
           }),
         ]}
       >
         <Input.Password />
       </Form.Item>
-
       <Form.Item
-        name="phone"
-        label="Número"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your phone number!',
-          },
-        ]}
+        name="select-multiple"
+        label="Selecione as tags"
+        rules={[{ required: true, message: 'Por favor, selecione suas tags', type: 'array' }]}
       >
-        <Input
-          addonBefore={prefixSelector}
-          style={{
-            width: '100%',
-          }}
-        />
+        <Select mode="multiple" placeholder="Selecione as tags">
+            {listacom}
+        </Select>
       </Form.Item>
-
       <Form.Item
         name="agreement"
         valuePropName="checked"

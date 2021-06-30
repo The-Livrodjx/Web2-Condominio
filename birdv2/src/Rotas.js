@@ -12,6 +12,7 @@ const Routes = () => (
     <Route  exact path="/Cadastrar" component={Logado}/>
     <Route  exact path="/CadastrarMorador" component={Logado}/>
     <Route  exact path="/Aviso" component={Logado}/>
+    <Route exact path="/Tags" component={Logado}/>
   </Router>
 );
 

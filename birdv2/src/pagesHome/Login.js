@@ -2,7 +2,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import React, { useState, useEffect } from "react"
 import api from '../servidor/Server';
-import { Redirect } from 'react-router-dom';
+import Cookies from 'js-cookie'
 const Login= (props) => {
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
@@ -14,7 +14,9 @@ const Login= (props) => {
     console.log(Resultado)
     if(Resultado){
       console.log("Achei")
+      Cookies.set("user", Resultado)
       props.history.push("/Logado")
+
     }else{
       console.log("Nao achei")
       return ;

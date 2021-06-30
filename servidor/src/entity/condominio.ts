@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from "typeorm";
+import { Tags } from "./tags";
+import { Morador } from "./usuario";
 @Entity()
 export class condominio {
 
@@ -28,5 +29,11 @@ export class condominio {
     @Column()
 
     Senha: string;
+
+    @OneToMany(type => Morador, morador => morador.idCondominio)
+    Morador: Morador;
+
+    @OneToMany(type => Tags, tags => tags.Tags)
+    Tags: Tags;
 
 }
