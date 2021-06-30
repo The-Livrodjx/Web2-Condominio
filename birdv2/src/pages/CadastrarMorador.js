@@ -111,6 +111,9 @@ const listacom = []
       })
   },[])
   console.log(res)
+  res.forEach(element => {
+    listacom.push(<Option key={element.Tags}>{element.Tags}</Option>)
+  })
   return (
     <Form
       {...formItemLayout}
@@ -212,9 +215,7 @@ const listacom = []
         rules={[{ required: true, message: 'Por favor, selecione suas tags', type: 'array' }]}
       >
         <Select mode="multiple" placeholder="Selecione as tags">
-        {res.forEach(element => {
-            return(<Option key={element.Tags}>{element.Tags}</Option>)
-        })}
+        {listacom}
         </Select>
       </Form.Item>
       <Form.Item
