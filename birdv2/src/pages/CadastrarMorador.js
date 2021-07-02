@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SelectTags from '../Carregamentos/SelectTags';
 import { Form, Input, Cascader, Row, Col, Checkbox, Button, AutoComplete, Select } from 'antd';
-import Cookies, { getJSON } from 'js-cookie'
+import Cookies, { getJSON, set } from 'js-cookie'
 import api from './../servidor/Server'
 const { Option } = Select;
 const residences = [
@@ -103,7 +103,7 @@ if(res.length === 1000){
 }*/
 const listacom = []
   const [res,setRes] = useState([])
-  const [teste,setTeste] = useState(JSON.parse(Cookies.get("user")))
+  const teste = Cookies.getJSON("user")
   useEffect(() =>{
       console.log("Entrei no effect 1")
       api.get(`/GetTags/${teste.idcondominio}`).then((response) =>{
@@ -114,13 +114,28 @@ const listacom = []
   res.forEach(element => {
     listacom.push(<Option key={element.Tags}>{element.Tags}</Option>)
   })
-  const [valor, setValor] = useState("")
-  function Cadastrar(){
-    
-    console.log(valor)
+  const [Tags, setValor] = useState("")
+  const [cpf, setCPF] = useState("")
+  const [email, setEmail] = useState("")
+  const [senha, setSenha] = useState("")
+  const [nome, setNome] = useState("")
+  const [ap, setAp] = useState("")
+
+  async function Cadastrar(){
+    await api.post("/SaveUser",{
+      cpf: form.getFieldValue().cpf,
+      Email: form.getFieldValue().email,
+      Senha: form.getFieldValue().senha,
+      Nome: form.getFieldsValue().Nome,
+      ApBloco: form.getFieldValue().Ap,
+      tags: Tags.toString(),
+      idCondominio: teste
+    })
+
   }
   return (
     <Form
+      
       {...formItemLayout}
       form={form}
       name="register"
@@ -130,6 +145,7 @@ const listacom = []
         prefix: '86',
       }}
       scrollToFirstError
+      
     >
       <Form.Item
         name="Nome"
@@ -158,6 +174,20 @@ const listacom = []
         
       </Form.Item>
 
+      <Form.Item
+        name="Ap"
+        label="Apartamento"
+        rules={[
+          {
+            required: true,
+            message: 'Por favor, insira seu apartamento'
+          },
+        ]}
+      >
+        <Input/>
+        
+      </Form.Item>
+
 
       <Form.Item
         name="email"
@@ -173,11 +203,11 @@ const listacom = []
           },
         ]}
       >
-        <Input />
+        <Input/>
       </Form.Item>
 
       <Form.Item
-        name="password"
+        name="senha"
         label="Senha"
         rules={[
           {
@@ -187,7 +217,7 @@ const listacom = []
         ]}
         hasFeedback
       >
-        <Input.Password />
+        <Input.Password/>
       </Form.Item>
 
       <Form.Item
@@ -203,7 +233,7 @@ const listacom = []
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
+              if (!value || getFieldValue('senha') === value) {
                 return Promise.resolve();
               }
 

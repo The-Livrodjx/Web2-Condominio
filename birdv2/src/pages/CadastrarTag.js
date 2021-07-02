@@ -1,21 +1,19 @@
-import { Table,Space, Tag } from 'antd';
-import React from 'react'
+import { Table,Space, Tag, Spin } from 'antd';
+import React, { useEffect, useState } from 'react'
+import api from './../servidor/Server'
+import Cookies from 'js-cookie'
+
 const columns = [
     {
-      title: 'Name',
+      title: 'Nome',
       dataIndex: 'name',
       key: 'name',
       render: text => <a>{text}</a>,
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Endereço',
-      dataIndex: 'endereco',
-      key: 'endereco',
+      title: 'Apartamento',
+      dataIndex: 'apartamento',
+      key: 'apartamento',
     },
     {
         title: 'Tags',
@@ -24,7 +22,7 @@ const columns = [
         render: tags => (
           <>
             {tags.map(tag => {
-              let color = tag.length > 5 ? 'geekblue' : 'green';
+              /*let color = tag.length > 5 ? 'geekblue' : 'green';
               if (tag === 'Morador') {
                 color = 'volcano';
               }
@@ -36,9 +34,9 @@ const columns = [
               }
               if (tag === "Sub-Sindico"){
                   color = "gray"
-              }
+              }*/
               return (
-                <Tag color={color} key={tag}>
+                <Tag>
                   {tag.toUpperCase()}
                 </Tag>
               );
@@ -47,7 +45,7 @@ const columns = [
         ),
       },
       {
-        title: 'Action',
+        title: 'Ação',
         key: 'action',
         render: (text) => (
           <Space size="middle">
@@ -61,26 +59,56 @@ const data = [
     {
       key: '1',
       name: 'John Brown',
-      age: 32,
-      endereco: 'Bloco 21 apartamento 35',
+      apartamento: 'Bloco 21 apartamento 35',
       tags: ['Funcionario', 'Zelador', 'Morador'],
     },
     {
       key: '2',
       name: 'Jim Green',
-      age: 42,
-      endereco: 'Bloco 45 apartamento 15',
+      apartamento: 'Bloco 45 apartamento 15',
       tags: ['Funcionario' , 'Porteiro', 'Morador'],
     },
     {
       key: '3',
       name: 'Joe Black',
-      age: 32,
-      endereco: 'bloco 10 apartamento 20',
+      apartamento: 'bloco 10 apartamento 20',
       tags: ['Funcionario', 'Sub-Sindico', 'Morador'],
     },
   ];
 
-function CadastrarTag (){return ( <Table columns={columns} dataSource={data} />)}
 
+  function CadastrarTag() {
+    const [resultado, setResultado] = useState()
+    const [contador, setContador] = useState(0)
+    const [isLoading, setIsloading] = useState(true)
+
+    useEffect(() => {
+        (async () => {
+            console.log("Entrei")
+            let response = await api.get(`/GetUser/${Cookies.getJSON("user").idcondominio}`)
+
+            setResultado(response.data)
+
+            setIsloading(false)
+        })
+    }, [])
+
+    console.log("Resultado: ", resultado)
+
+    const data2 = []
+
+    resultado.map(element => {
+        setContador(contador + 1)
+        data2.push({
+            key: `${contador}`,
+            name: `${element.Nome}`,
+            apartamento: `${element.ApBloco}`,
+            tags: element.tags,
+        })
+    });
+    //<Table columns={columns} dataSource={data}/>
+
+    return ((isLoading)?<Spin/>:<Table columns={columns} dataSource={data2}/>)
+}
+  
 export default CadastrarTag;

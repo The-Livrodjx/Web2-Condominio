@@ -11,6 +11,9 @@ export class Morador{
     cpf: String
 
     @Column()
+    Email: String
+
+    @Column()
     Senha: String
 
     @Column()
@@ -22,8 +25,8 @@ export class Morador{
     @Column()
     tags: String
 
-    @ManyToOne(type => condominio, Condominio => Condominio.idcondominio)
-    @JoinColumn()
-    idCondominio: condominio
+    @ManyToOne(() => condominio)
+    @JoinColumn({name: "Condominio"})
+    idCondominio: condominio;
 
 }

@@ -30,7 +30,7 @@ export class condominio {
 
     Senha: string;
 
-    @OneToMany(type => Morador, morador => morador.idCondominio)
+    @OneToMany(type => Morador, morador => morador.cpf)
     Morador: Morador;
 
     @OneToMany(type => Tags, tags => tags.Tags)
