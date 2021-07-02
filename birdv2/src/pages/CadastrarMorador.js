@@ -106,7 +106,7 @@ const listacom = []
   const teste = Cookies.getJSON("user")
   useEffect(() =>{
       console.log("Entrei no effect 1")
-      api.get(`/GetTags/${teste.idcondominio}`).then((response) =>{
+      api.get(`/GetTags/1`).then((response) =>{
         setRes(response.data)
       })
   },[])
